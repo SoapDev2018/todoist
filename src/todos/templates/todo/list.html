@@ -5,76 +5,19 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h2 class="mt-4">
-                Add Item
-            </h2>
-            {% if form.slug.errors %}
-                <ul class="mb-2">
-                    {% for err in form.slug.errors %}
-                        <li class="alert alert-danger">
-                            {{ err }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-            
-            {% if form.non_field_errors %}
-                <ul>
-                    {% for err in form.non_field_errors %}
-                        <li class="alert alert-danger">
-                            {{ err }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-
-            {% if form.text.errors %}
-                <ul>
-                    {% for err in form.text.errors %}
-                        <li class="alert alert-danger">
-                            {{ err }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-            <form class="form-inline mx-auto" action="" method="POST">
-                {% csrf_token %}
-
-                <label class="sr-only" for="inlineFormInputName2">ToDo</label>
-                {{ form.text }}
-                
-
-                <label class="sr-only" for="inlineFormInputName2">Slug</label>
-                {{ form.slug }}
-
-                <button type="submit" class="btn btn-primary mb-2">Submit</button>
-            </form>
-        </div>
-    </div>
-    {% for obj in object_list %}
-    <div class="row mt-4">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                  <p class="card-text text-center h3"> <b>Task - </b> {{ obj.text }}</p>
-                  <a href="{{ obj.slug }}/edit" class="btn btn-primary">Edit Todo</a>
-                  <a href="{{ obj.slug }}/delete" class="btn btn-danger float-lg-right">Delete Todo</a>
+    {% include 'todo/form.html' %}
+        {% for obj in object_list %}
+        <div class="row mt-4">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                    <p class="card-text text-center h3"> <b>Task - </b> {{ obj.text }}</p>
+                    <a href="{{ obj.slug }}/edit" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit Task" data-animation="true">Edit Task</a>
+                    <a href="{{ obj.slug }}/delete" class="btn btn-danger float-lg-right" data-toggle="tooltip" data-placement="top" title="Delete Task">Delete Task</a>
+                    </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 {% endblock %}

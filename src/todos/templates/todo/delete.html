@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>
+                    Are you sure you want to delete the following?:
+                </h1>
+                <p class='h3'>
+                    <b> It has the following content: </b>
+                </p>
+                <p class='h4'>
+                    {{ object.text }}
+                    <br>
+                    <br>
+                    with a published date of {{ object.added_date }}
+                </p>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-danger">
+                        Yes, delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

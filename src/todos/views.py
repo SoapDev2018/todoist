@@ -13,6 +13,7 @@ def todo_list_view(request):
     template_name = 'todo/list.html'
     context = {
         "title": "All Todos",
+        "objective": "Add Item",
         "form": form,
         "object_list": object_list,
     }
@@ -28,7 +29,17 @@ def todo_update_view(request, slug):
     template_name = 'todo/edit.html'
     context = {
         "title": "Edit Todo",
+        "objective": f'Edit Todo - { obj.text }',
         "form": form,
         "obj": obj,
     }
     return render(request, template_name, context=context)
+
+def todo_delete_view(request, slug):
+    obj = get_object_or_404(Todo, slug=slug)
+    template_name = 'todo/delete.html'
+    if request.method == "POST":
+        obj.delete()
+        return redirect('/todos')
+    context = {'object': obj}
+    return render(request, template_name, context)

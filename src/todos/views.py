@@ -10,7 +10,7 @@ def todo_list_view(request):
         form.save()
         form = TodoModelForm()
     object_list = Todo.objects.all()
-    template_name = 'blogs/list.html'
+    template_name = 'todo/list.html'
     context = {
         "title": "All Todos",
         "form": form,

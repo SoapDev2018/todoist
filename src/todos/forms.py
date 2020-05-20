@@ -18,6 +18,7 @@ class TodoModelForm(forms.ModelForm):
         }
 
     def clean_slug(self, *args, **kwargs):
+        instance = self.instance
         slug = self.cleaned_data.get('slug')
         if len(slug) < 3:
             raise forms.ValidationError(
@@ -26,6 +27,8 @@ class TodoModelForm(forms.ModelForm):
             raise forms.ValidationError(
                 "The slug needs to have a '-' character in it.")
         qs = Todo.objects.filter(slug__iexact=slug)
+        if instance is not None:
+            qs = qs.exclude(pk=instance.pk)
         if qs.exists():
             raise forms.ValidationError("The slug has already been used")
         return slug
